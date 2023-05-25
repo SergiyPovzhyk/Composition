@@ -21,6 +21,6 @@
     <string name="retry">Спробувати знову</string>
     <string name="right_answers">Правильних відповідей %s із %s необхідних</string>
     <string name="required_percentage">Необхідний відсоток правильних відповідей: %s</string>
-    <string name="required_score">Необхідна кількість правильних відповідей %s</string>
+    <string name="required_score">Необхідна кількість правильних відповідей: %s</string>
     <string name="progress_answers">Правильних відповідей %s (мінімум %s)</string>
 </resources>
