@@ -1,11 +1,21 @@
 package com.example.composition.presentation
 
+import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.example.composition.R
 import com.example.composition.domain.entity.GameResult
 
+
+interface OnOptionClickListener{
+    fun onOptionClick(option:Int)
+}
 @BindingAdapter("requiredAnswer")
 fun bindRequiredAnswer(textView: TextView, count: Int) {
     textView.text = String.format(
@@ -56,5 +66,42 @@ private fun getSmileResId(winner: Boolean): Int {
         R.drawable.ic_smile
     } else {
         R.drawable.ic_sad
+    }
+}
+
+@BindingAdapter("progress")
+fun bindProgress(progressBar:ProgressBar,percent:Int){
+    progressBar.setProgress(percent,true)
+}
+
+@BindingAdapter("enoughCount")
+fun bindColor(textView: TextView,enough: Boolean){
+    textView.setTextColor(getColorByState(textView.context,enough))
+}
+
+private fun getColorByState(context: Context,goodState: Boolean): Int {
+    val colorResId = if (goodState) {
+        android.R.color.holo_green_light
+    } else {
+        android.R.color.holo_red_light
+    }
+    return ContextCompat.getColor(context,colorResId)
+}
+
+@BindingAdapter("enoughPercent")
+fun bindPercent(progressBar: ProgressBar,enough: Boolean){
+    val color = getColorByState(progressBar.context,enough)
+    progressBar.progressTintList = ColorStateList.valueOf(color)
+}
+
+@BindingAdapter("numberAsText")
+fun bindNumberAsText(textView: TextView,number:Int){
+    textView.text = number.toString()
+}
+
+@BindingAdapter("onOptionClickListener")
+fun bindOnOptionClickListener(textView: TextView,onOptionClickListener: OnOptionClickListener){
+    textView.setOnClickListener {
+        onOptionClickListener.onOptionClick(textView.text.toString().toInt())
     }
 }
